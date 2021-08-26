@@ -1,5 +1,6 @@
 <template>
-  <div class="cont-form flex flex-col min-h-screen h-screen">
+  <div class="cont-form flex flex-col min-h-screen"
+  :class="{ 'h-screen' : optionSelected == 'byUbication' }">
     <div
       class="form relative z-20 bg-cover bg-center"
       :style="{
@@ -43,7 +44,7 @@
         </router-link>
       </div>
       <!-- BTN BACK !-->
-      <div class="cont-title h-32">
+      <div class="cont-title h-auto pb-5 sm:pb-0 sm:h-32">
         <h2
           v-if="optionSelected == 'byUbication'"
           class="text-gray-100 font-semibold text-2xl text-center"
@@ -58,7 +59,7 @@
         </h2>
       </div>
       <div
-        class="w-full absolute bottom-0 -mb-16 z-50 left-0 flex justify-center"
+        class="w-full p-4 relative sm:absolute sm:bottom-0 mb-10 sm:-mb-16 z-30 left-0 flex justify-center"
       >
         <div
           v-if="optionSelected == 'byDistrict'"
@@ -244,7 +245,8 @@
     </div>
     <!-- FORM !-->
 
-    <div class="resultMap relative z-10 flex-1">
+    <div class="resultMap relative z-10"
+    :class="{ 'sm:flex-1 h-96' : optionSelected == 'byDistrict' , 'flex-1' : optionSelected == 'byUbication' }">
       <div id="mapid" class="w-full h-full"></div>
     </div>
   </div>
@@ -380,7 +382,7 @@ export default {
         this.getResultsByUserGPS(lat, long);
       };
 
-      if ("geolocation" in navigator) {
+      if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
           setGPSUser(position.coords.latitude, position.coords.longitude);
         });
